@@ -4,11 +4,11 @@ import com.feather.contentcenter.dao.content.ShareMapper;
 import com.feather.contentcenter.domain.dto.share.ShareDTO;
 import com.feather.contentcenter.domain.dto.user.UserDTO;
 import com.feather.contentcenter.domain.entity.content.Share;
+import com.feather.contentcenter.feignClient.UserFeignClient;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * @projectName: content-center
@@ -25,12 +25,12 @@ public class ShareService {
 
     private final ShareMapper shareMapper;
 
-    private final  RestTemplate restTemplate;
+    private final UserFeignClient userFeignClient;
 
     public ShareDTO findById(Integer id){
         Share share = this.shareMapper.selectByPrimaryKey(id);
         Integer userId = share.getUserId();
-        UserDTO userDTO=this.restTemplate.getForObject("http://user-center/users/{userId}",UserDTO.class,userId);
+        UserDTO userDTO=this.userFeignClient.findById(userId);
         ShareDTO shareDTO = new ShareDTO();
         //消息装配
         BeanUtils.copyProperties(userDTO,shareDTO);

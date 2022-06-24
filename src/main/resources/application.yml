@@ -11,6 +11,7 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+      #  cluster-name: NANJING
   application:
     name: content-center
 server:
@@ -22,4 +23,7 @@ ribbon:
   eager-load:
     clients: user-center
     enabled: true
+logging:
+  level:
+    com.feather.contentcenter.feignClient.UserFeignClient : debug
 #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
