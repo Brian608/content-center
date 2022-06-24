@@ -15,3 +15,11 @@ spring:
     name: content-center
 server:
   port: 11081
+##通过配置文件的方式配置ribbon的规则
+#user-center:
+#  ribbon:
+ribbon:
+  eager-load:
+    clients: user-center
+    enabled: true
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
