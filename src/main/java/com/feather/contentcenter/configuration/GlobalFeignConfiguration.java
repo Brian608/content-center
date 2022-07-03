@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
  * @since: 2022/6/25 07:47
  * @version: 1.0
  */
-public class UserCenterFeignConfiguration {
+public class GlobalFeignConfiguration {
     @Bean
     public Logger.Level level(){
         //打印feign所有请求的细节

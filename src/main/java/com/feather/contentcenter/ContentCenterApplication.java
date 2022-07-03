@@ -1,5 +1,6 @@
 package com.feather.contentcenter;
 
+import com.feather.contentcenter.configuration.GlobalFeignConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -13,6 +14,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @MapperScan("com.feather")
 @SpringBootApplication
+//@EnableFeignClients(defaultConfiguration = GlobalFeignConfiguration.class)
 @EnableFeignClients
 public class ContentCenterApplication {
 
