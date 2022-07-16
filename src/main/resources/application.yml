@@ -12,6 +12,13 @@ spring:
       discovery:
         server-addr: localhost:8848
       #  cluster-name: NANJING
+    sentinel:
+      filter:
+        #关闭掉对springmvc端点的保护
+        enabled: false
+      transport:
+        #指定sentinel控制台地址
+        dashboard: localhost:8080
   application:
     name: content-center
 server:
@@ -27,6 +34,8 @@ logging:
   level:
     com.feather.contentcenter.feignClient.UserFeignClient : debug
 feign:
+  sentinel:
+    enabled: true
   client:
     config:
       # 全局配置
@@ -36,4 +45,9 @@ feign:
     enabled: true
     max-connections: 200
     max-connections-per-route: 50
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
