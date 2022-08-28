@@ -10,16 +10,19 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.RuleConstant;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
+import com.feather.contentcenter.rocketmq.MySource;
 import com.feather.contentcenter.sentineltest.TestControllerBlockHandlerClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -41,6 +44,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/test")
 public class testController {
+
+    @Autowired
+    private Source source;
+
+    @Autowired
+    private MySource mySource;
 
 
     @GetMapping("/test-hot")
@@ -124,4 +133,17 @@ public class testController {
     public String fallback(String a) {
         return "限流，或者降级了 fallback";
     }
+
+    @GetMapping("/test-stream")
+    public String testStream(){
+        this.source.output().send(MessageBuilder.withPayload("消息提").build());
+        return  "success";
+    }
+
+    @GetMapping("/test-stream2")
+    public String testStream2(){
+        this.mySource.output().send(MessageBuilder.withPayload("消息提").build());
+        return  "success";
+    }
+
 }
